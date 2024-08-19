@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Note Visualization</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #1e1e1e;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+      }
+      #3d-graph {
+        width: 100vw;
+        height: 100vh;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="3d-graph"></div>
+
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/3d-force-graph"></script>
+
+    <script>
+      const data = {
+        nodes: [
+          { id: "Note1" },
+          { id: "Note2" },
+          { id: "Note3" },
+          { id: "Note4" },
+          { id: "Note5" },
+          { id: "Note6" },
+          { id: "Note7" },
+          { id: "Note8" },
+          { id: "Note9" },
+          { id: "Note10" },
+          { id: "Note11" },
+          { id: "Note12" },
+          { id: "Note13" },
+          { id: "Note14" },
+          { id: "Note15" },
+          { id: "Note16" },
+          { id: "Note17" },
+          { id: "Note18" },
+          { id: "Note19" },
+          { id: "Note20" },
+          { id: "Note21" },
+          { id: "Note22" },
+          { id: "Note23" },
+          { id: "Note24" },
+          { id: "Note25" },
+          { id: "Note26" },
+          { id: "Note27" },
+          { id: "Note28" },
+          { id: "Note29" },
+          { id: "Note30" },
+        ],
+        links: [
+          { source: "Note1", target: "Note2" },
+          { source: "Note1", target: "Note3" },
+          { source: "Note1", target: "Note4" },
+          { source: "Note2", target: "Note5" },
+          { source: "Note2", target: "Note6" },
+          { source: "Note3", target: "Note7" },
+          { source: "Note3", target: "Note8" },
+          { source: "Note4", target: "Note9" },
+          { source: "Note4", target: "Note10" },
+          { source: "Note5", target: "Note11" },
+          { source: "Note5", target: "Note12" },
+          { source: "Note6", target: "Note13" },
+          { source: "Note6", target: "Note14" },
+          { source: "Note7", target: "Note15" },
+          { source: "Note7", target: "Note16" },
+          { source: "Note8", target: "Note17" },
+          { source: "Note8", target: "Note18" },
+          { source: "Note9", target: "Note19" },
+          { source: "Note9", target: "Note20" },
+          { source: "Note10", target: "Note21" },
+          { source: "Note10", target: "Note22" },
+          { source: "Note11", target: "Note23" },
+          { source: "Note11", target: "Note24" },
+          { source: "Note12", target: "Note25" },
+          { source: "Note12", target: "Note26" },
+          { source: "Note13", target: "Note27" },
+          { source: "Note13", target: "Note28" },
+          { source: "Note14", target: "Note29" },
+          { source: "Note14", target: "Note30" },
+        ],
+      };
+
+      const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
+        .graphData(data)
+        .nodeLabel("id")
+        .nodeAutoColorBy("id")
+        .nodeThreeObject((node) => {
+          const sphereGeometry = new THREE.SphereGeometry(10, 32, 32);
+          const sphereMaterial = new THREE.MeshBasicMaterial({
+            color: 0x800080,
+          });
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+          const sprite = new THREE.Sprite(
+            new THREE.SpriteMaterial({
+              map: new THREE.CanvasTexture(generateLabelCanvas(node.id)),
+              depthWrite: false,
+            })
+          );
+          sprite.scale.set(20, 20, 1);
+          sprite.position.set(0, 20, 0);
+
+          sphere.add(sprite);
+          sphere.onClick = () => alert(node.id);
+
+          return sphere;
+        })
+        .linkDirectionalParticles(0)
+        .linkWidth(1.5);
+
+      function generateLabelCanvas(text) {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        context.font = "80px Arial";
+        context.fillStyle = "#ffffff";
+        context.fillText(text, 0, 80);
+        return canvas;
+      }
+
+      Graph.onNodeClick((node) => alert(node.id));
+      Graph.cameraPosition({ z: 800 });
+    </script>
+  </body>
+</html>
