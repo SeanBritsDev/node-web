@@ -1,0 +1,50 @@
+:root {
+  --node-text-color: #ffffff;
+  --text-color: #ffffff;
+
+  --node-color: #800080;
+  --hl-node-color: #ee00ee;
+  
+  --node-line-color: #ffffff;
+  --hl-node-line-color: #ee00ee;
+
+  --node-bg-color: #1e1e1e;
+  
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--node-bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
+
+#3d-graph {
+  width: 100vw;
+  height: 100vh;
+}
+  
+canvas {
+  display: block;
+}
+
+.node-text-color {
+  color: var(--node-text-color);
+}
+
+.node-color {
+  color: var(--node-color);
+}
+
+.hl-node-color {
+  color: var(--hl-node-color);
+}
+
+.node-line-color {
+  color: var(--node-line-color);
+}
+
+.hl-node-line-color {
+  color: var(--hl-node-line-color);
+}
